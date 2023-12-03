@@ -11,15 +11,21 @@ const PORT = 3001
 // reference: "How do I consume the JSON POST data in an Express application" Stack Overflow: https://stackoverflow.com/questions/10005939/how-do-i-consume-the-json-post-data-in-an-express-application
 
 app.use(express.json());
-app.use('/api', api);
 
 // pulls files from public folder
 // reference: "Serving static files in Express" Express: https://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
-// uses express to get notes from the API and syncs them
-// reference: Module 11 Student Mini Project, "Callback API" Node.js: https://nodejs.org/api/fs.html
-app.get('/api/notes', (req, res) => {
-    res.json(JSON.parse(fs.readFileSync(path.join(__dirname, 'db', 'db.json'))));
+// edited get methods to define the routes for the landing/notes page
+// reference: Module 11 Activty 4: API HTML routes
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'notes.html'));
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
   });
-  
