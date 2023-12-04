@@ -1,7 +1,8 @@
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
-const notes = require ('./db/db')
+const notes = require('./db/notes');
+// generates unique ids
+const uuid = require('./helpers/uuid')
 
 const app = express();
 
