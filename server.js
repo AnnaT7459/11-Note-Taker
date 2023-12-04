@@ -43,10 +43,17 @@ if (title && text) {
         review_id: uuid(),
     };
 
-    const response = {
+    const userNote = {
         status:'success',
-        body:  newNote
-    }
+        body:  newNote,
+    };
+    console.log(userNote);
+    // reference: "HTTP response status codes" mdm web docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+    // 201 = 'created'
+    res.status(201).json(userNote);
+} else {
+    // 500 = internal server error
+    res.status(500).json('Error adding note')
 }
 })
   
@@ -55,3 +62,4 @@ if (title && text) {
     });
 
 
+;
