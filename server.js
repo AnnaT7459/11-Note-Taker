@@ -23,9 +23,32 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
 });
-app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/notes.html'));
+app.get('/api/notes', (req, res) => {
+    res.status(200).json(notes);
   });
+
+//   post request to add a note
+app.post('/api/notes', (req, res) => {
+    // log that post was received
+    console.info(`${req.method} request received to add a note`);
+
+// destructure for items in req.body
+const { title, text } = req.body;
+
+// if note title and text are/are not entered:
+if (title && text) {
+    const newNote = {
+        title,
+        text,
+        review_id: uuid(),
+    };
+
+    const response = {
+        status:'success',
+        body:  newNote
+    }
+}
+})
   
     app.listen(PORT, () => {
         console.log(`Server is running on http://localhost:${PORT}`);
