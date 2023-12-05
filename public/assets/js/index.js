@@ -79,7 +79,6 @@ const handleNoteSave = () => {
   };
   saveNote(newNote).then(() => {
     getAndRenderNotes();
-    renderNoteList([{ title: newNote.title, text: newNote.text }]);
     renderActiveNote();
   });
 };
@@ -170,18 +169,10 @@ const renderNoteList = async (notes) => {
     noteListItems.push(createLi('No saved Notes', false));
   }
 
-  // Creates new list item for the new note
-  const newNoteLi = createLi(newNote.title);
-  newNoteLi.dataset.note = JSON.stringify(newNote);
-
-  //puts new note at the top of the list
-  // reference: "JavaScript Array unshift()" w3schools: https://www.w3schools.com/jsref/jsref_unshift.asp
-  noteListItems.unshift(newNoteLi);
-
-  // Adds the rest of the existing notes
   jsonNotes.forEach((note) => {
     const li = createLi(note.title);
     li.dataset.note = JSON.stringify(note);
+
     noteListItems.push(li);
   });
 

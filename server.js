@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const notes = require('./db/notes');
+const fs = require('fs');
 // generates unique ids
 const uuid = require('./helpers/uuid')
 
@@ -29,7 +29,15 @@ app.get('/notes', (req, res) => {
 });
 
 app.get('/api/notes', (req, res) => {
-    res.status(200).json(notes);
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        if (err) {
+            res.status(500).json(err);
+        } else {
+            // Convert string into JSON object
+            const parsedNotes = JSON.parse(data);
+            res.status(200).json(parsedNotes);
+        }
+    });
 });
 
 //   post request to add a note
@@ -55,10 +63,25 @@ app.post('/api/notes', (req, res) => {
         console.log(userNote);
         // reference: "HTTP response status codes" mdm web docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
         // 201 = 'created'
-        res.status(201).json(userNote);
+        fs.readFile('./db/db.json', 'utf8', (err, data) => {
+            if (err) {
+                res.status(500).json(err);
+            } else {
+                // Convert string into JSON object
+                const parsedNotes = JSON.parse(data);
+                parsedNotes.push(newNote);
+                fs.writeFile('./db/db.json', JSON.stringify(parsedNotes), (err, data) => {
+                    if (err) {
+                        res.status(500).json(err);
+                    } else {
+                        res.status(201).json(newNote);
+                    }
+                });
+            }
+        });
     } else {
-        // 500 = internal server error
-        res.status(500).json('Error adding note')
+        // bad request = 400
+        res.status(400).json('Enter a title and text for your note');
     }
 })
 
