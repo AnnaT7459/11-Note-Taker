@@ -53,7 +53,7 @@ app.post('/api/notes', (req, res) => {
         const newNote = {
             title,
             text,
-            review_id: uuid(),
+            id: uuid(),
         };
 
         const userNote = {
