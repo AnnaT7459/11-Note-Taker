@@ -16,6 +16,7 @@ You will need to have Express.js installed within the integrated terminal of VS 
 Run server.js and click the link to the local host. Then you will be able to add a title for a note and the text for the note. Then you click the save button and it will appear on the left-hand column. You can add multiple notes, clear notes if you decide not to make the note, and delete notes. 
 
 This project app is deployed through Heroku.
+https://sleepy-anchorage-41730-09a2e414e230.herokuapp.com/
 
 ## Credits
 - Module 11 Activity 2 Student Setup
