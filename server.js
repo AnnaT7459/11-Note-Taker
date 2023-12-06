@@ -7,7 +7,7 @@ const uuid = require('./helpers/uuid')
 const app = express();
 
 // reference: Module 11 Activity 2 Student Setup
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Middleware for parsing application/json and urlencoded data (MODULE 11 - INSTRUCTOR CODE 15)
 app.use(express.json());
